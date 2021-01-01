@@ -80,7 +80,16 @@ inner_loop_start:
 
 
     mv a0, s2
+
+    # debuging code
+    # li t0, 2
+    # ebreak
+
     jal ra dot
+
+    # debuging code
+    # ebreak
+
     sw a0, 0(s6)
 
     add s6, s6, a5 # 4

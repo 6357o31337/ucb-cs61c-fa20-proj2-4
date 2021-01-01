@@ -22,19 +22,24 @@ dot:
     ebreak
 
     # Prologue
-    
-    
+    addi sp, sp, -8
+    sw s0, 0(sp)
+    sw s1, 4(sp)
+
+    mv s0, a1
+    mv s1, a3
     
     mv t0 zero
     
     mv t4 zero
+    mv t6, a4
 
     # li t5 4
     mv t5 zero
     addi t5, t5, 4
 
-    mul a3, a3, t5
-    mul a4, a4, t5
+    mul s1, s1, t5
+    mul t6, t6, t5
 
 
 loop_start:
@@ -43,7 +48,7 @@ loop_start:
     
     # t1 := *a0
     lw t1, 0(a0)
-    lw t2, 0(a1)
+    lw t2, 0(s0)
     
     #
     mul t3, t1, t2
@@ -52,8 +57,8 @@ loop_start:
     
     # go to next value
     addi t0, t0, 1
-    add a0, a0, a3
-    add a1, a1, a4
+    add a0, a0, s1
+    add s0, s0, t6
     j loop_start
 
 
@@ -63,6 +68,8 @@ loop_end:
     mv a0, t4
 
     # Epilogue
-
+    lw s0, 0(sp)
+    lw s1, 4(sp)
+    addi sp, sp, 8
     
     ret
